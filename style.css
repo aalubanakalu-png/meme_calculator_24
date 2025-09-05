@@ -152,10 +152,12 @@ button.zero {
     width: 95%;
   }
   .display {
-    font-size: 1.6rem;
+    font-size: 2rem;   /* keep same as desktop */
     padding: 15px;
+    color: #fff;       /* force white text */
   }
   .display .msg {
     font-size: 0.7rem;
+    color: #fff;       /* force white text */
   }
 }
