@@ -64,9 +64,7 @@ function makeWrong(correct) {
 
   function capLength(val) {
     val = val.toString();
-    if (val.length > 14) {
-      return val.slice(0, 14);
-    }
+    if (val.length > 14) return val.slice(0, 14);
     return val;
   }
 
@@ -97,11 +95,8 @@ function setDisplayText(text, isMessage = false) {
   if (isMessage) span.classList.add("msg");
   display.appendChild(span);
   requestAnimationFrame(() => {
-    if (span.scrollWidth > display.clientWidth) {
-      span.classList.add("scroll");
-    } else {
-      span.classList.remove("scroll");
-    }
+    if (span.scrollWidth > display.clientWidth) span.classList.add("scroll");
+    else span.classList.remove("scroll");
   });
 }
 
@@ -170,7 +165,7 @@ function startProcess(expr) {
 function addInputHandler(btn) {
   let tapped = false;
 
-  function handler(e) {
+  function handler() {
     if (tapped) return;
     tapped = true;
     setTimeout(() => tapped = false, 300);
@@ -182,11 +177,8 @@ function addInputHandler(btn) {
     if (running) return;
 
     if (!isNaN(action)) {
-      if (display.textContent === "0" || current === "0") {
-        current = action;
-      } else {
-        current += action;
-      }
+      if (display.textContent === "0" || current === "0") current = action;
+      else current += action;
       setDisplayText(current);
 
     } else if (action === ".") {
@@ -223,8 +215,8 @@ function addInputHandler(btn) {
     }
   }
 
+  // Only use click to prevent double input on mobile
   btn.addEventListener("click", handler);
-  // Removed touchstart to avoid double firing on mobile
 }
 
 document.querySelectorAll(".buttons button").forEach(addInputHandler);
