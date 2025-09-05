@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Calculator by π</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="calc-container">
+    <header>
+      <h1>Calculator by π</h1>
+      <button id="themeToggle" aria-label="Toggle theme">🌙</button>
+    </header>
+
+    <div class="display">
+      <div id="display">0</div>
+    </div>
+    <div class="progress" id="progress">
+      <div class="bar" id="bar"></div>
+    </div>
+
+    <div class="buttons">
+      <button class="func" data-action="clear">AC</button>
+      <button class="func" data-action="back">⌫</button>
+      <button class="func" data-action="%">%</button>
+      <button class="op" data-action="/">÷</button>
+
+      <button data-action="7">7</button>
+      <button data-action="8">8</button>
+      <button data-action="9">9</button>
+      <button class="op" data-action="*">×</button>
+
+      <button data-action="4">4</button>
+      <button data-action="5">5</button>
+      <button data-action="6">6</button>
+      <button class="op" data-action="-">−</button>
+
+      <button data-action="1">1</button>
+      <button data-action="2">2</button>
+      <button data-action="3">3</button>
+      <button class="op" data-action="+">+</button>
+
+      <button class="zero" data-action="0">0</button>
+      <button data-action=".">.</button>
+      <button class="eq" data-action="=">=</button>
+    </div>
+
+    <!-- Overlay video fits inside calculator -->
+    <div id="videoOverlay">
+      <video id="cutOffVideo" src="cut me off.mp4" playsinline></video>
+    </div>
+  </div>
+
+  <!-- Background & effect audio -->
+  <audio id="happyMusic" src="happy-happy-happy-made-with-Voicemod.webm" loop></audio>
+  <audio id="thinkingSound" src="intense-thinking-made-with-Voicemod (1).webm"></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
