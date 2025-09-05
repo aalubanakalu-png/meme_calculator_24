@@ -66,7 +66,7 @@ header {
 /* Meme messages */
 .display .msg {
   display: block;
-  font-size: 1.1rem !important;  /* forces 1.1rem */
+  font-size: 1.1rem !important;  /* forces 0.8rem */
   line-height: 1.2;
   font-weight: bold;
   color: #fff !important;        /* forces white */
@@ -156,7 +156,7 @@ button.zero {
     width: 95%;
   }
   .display {
-    font-size: 1.6rem;  
+    font-size: 0.8rem;  
     min-height: 60px;
     padding: 15px;
   }
@@ -166,3 +166,4 @@ button.zero {
     color: #fff !important;        /* same as desktop */
   }
 }
+
