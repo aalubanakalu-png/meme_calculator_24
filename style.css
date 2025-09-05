@@ -48,7 +48,7 @@ header {
 .display {
   background: #222;
   color: #fff;
-  font-size: 2rem;      /* normal numbers */
+  font-size: 2rem;      
   text-align: right;
   padding: 20px;
   border-radius: 8px;
@@ -66,10 +66,10 @@ header {
 /* Meme messages */
 .display .msg {
   display: block;
-  font-size: 1.1rem !important;  /* same size on desktop and mobile */
+  font-size: 1.1rem !important;  /* forces 1.1rem */
   line-height: 1.2;
   font-weight: bold;
-  /* color inherits from .display (#fff) */
+  color: #fff !important;        /* forces white */
 }
 
 .scroll {
@@ -156,12 +156,13 @@ button.zero {
     width: 95%;
   }
   .display {
-    font-size: 1.6rem;  /* normal numbers on mobile */
+    font-size: 1.6rem;  
     min-height: 60px;
     padding: 15px;
   }
   .display .msg {
     font-size: 1.1rem !important;  /* same as desktop */
     line-height: 1.2;
+    color: #fff !important;        /* same as desktop */
   }
 }
