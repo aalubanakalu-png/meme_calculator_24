@@ -129,7 +129,7 @@ function startProcess(expr) {
       thinkingSound.pause();
       thinkingSound.currentTime = 0;
 
-      setTimeout(() => { // 1 second delay for overlay
+      setTimeout(() => { // 0.7 second delay for overlay
         videoOverlay.style.display = "flex";
         cutOffVideo.currentTime = 0;
         cutOffVideo.play();
@@ -140,7 +140,7 @@ function startProcess(expr) {
           setDisplayText("0");
           happyMusic.play();
         };
-      }, 1000);
+      }, 700);
 
       setTimeout(() => { progress.style.display = "none"; }, 1000);
     }
