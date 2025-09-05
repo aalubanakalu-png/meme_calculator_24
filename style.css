@@ -36,7 +36,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  position: relative; /* important for overlay video */
+  position: relative;
 }
 
 header {
@@ -48,29 +48,28 @@ header {
 .display {
   background: #222;
   color: #fff;
-  font-size: 2rem;      /* base font size */
+  font-size: 2rem;      /* normal numbers */
   text-align: right;
   padding: 20px;
   border-radius: 8px;
-  min-height: 80px;      /* increased to fit bigger meme messages */
+  min-height: 70px;
   overflow: hidden;
   position: relative;
 }
 
 .display div {
   white-space: nowrap;
-  display: inline-block; /* normal input numbers stay inline */
+  display: inline-block;
   will-change: transform;
 }
 
-/* Meme messages - now truly bigger */
+/* Meme messages */
 .display .msg {
-  display: block;          /* allows it to expand width */
-  font-size: 2rem !important; /* forced font size */
-  line-height: 1.2;        /* prevents clipping */
-  text-align: left;
+  display: block;
+  font-size: 1.1rem !important;  /* same size on desktop and mobile */
+  line-height: 1.2;
   font-weight: bold;
-  color: #ff4444;           /* optional color for meme effect */
+  /* color inherits from .display (#fff) */
 }
 
 .scroll {
@@ -132,7 +131,7 @@ button.zero {
   transition: width 0.3s linear;
 }
 
-/* Overlay video fits calculator */
+/* Overlay video */
 #videoOverlay {
   position: absolute;
   top: 0; left: 0;
@@ -141,7 +140,7 @@ button.zero {
   justify-content: center;
   align-items: center;
   z-index: 100;
-  pointer-events: auto; /* blocks input while visible */
+  pointer-events: auto;
 }
 
 #videoOverlay video {
@@ -157,12 +156,12 @@ button.zero {
     width: 95%;
   }
   .display {
-    font-size: 1.6rem;
+    font-size: 1.6rem;  /* normal numbers on mobile */
+    min-height: 60px;
     padding: 15px;
-    min-height: 70px;    /* ensure space for bigger messages */
   }
   .display .msg {
-    font-size: 1.6rem !important; /* forced mobile size */
+    font-size: 1.1rem !important;  /* same as desktop */
     line-height: 1.2;
   }
 }
