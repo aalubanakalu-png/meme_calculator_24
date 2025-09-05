@@ -48,7 +48,7 @@ header {
 .display {
   background: #222;
   color: #fff;
-  font-size: 2rem;
+  font-size: 2rem; /* keeps numbers big */
   text-align: right;
   padding: 20px;
   border-radius: 8px;
@@ -63,11 +63,11 @@ header {
   will-change: transform;
 }
 
-/* Calculator display messages (meme/funny messages) */
+/* Funny/meme messages */
 .display .msg {
-  font-size: 0.6rem !important; /* updated size */
+  font-size: 12px !important; /* smaller than numbers */
   text-align: left;
-  color: #fff !important;       /* white color */
+  color: #fff !important;     /* white color */
 }
 
 .scroll {
@@ -154,11 +154,11 @@ button.zero {
     width: 95%;
   }
   .display {
-    font-size: 1.6rem;
+    font-size: 1.6rem; /* numbers slightly smaller on mobile */
     padding: 15px;
   }
   .display .msg {
-    font-size: 0.6rem !important; /* same size on mobile */
+    font-size: 12px !important; /* messages remain small */
     color: #fff !important;
   }
 }
