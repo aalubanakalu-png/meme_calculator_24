@@ -63,12 +63,12 @@ header {
   will-change: transform;
 }
 
-/* Meme messages */
+/* Meme messages - forced big size */
 .display .msg {
-  font-size: 2rem; /* Increased from 2.0rem to 2rem */
+  font-size: 2rem !important; /* forced desktop size */
   text-align: left;
-  font-weight: bold; /* optional for emphasis */
-  color: #ff4444;    /* optional color for meme effect */
+  font-weight: bold;
+  color: #ff4444; /* optional for emphasis */
 }
 
 .scroll {
@@ -159,6 +159,6 @@ button.zero {
     padding: 15px;
   }
   .display .msg {
-    font-size: 1.4rem; /* readable on small screens */
+    font-size: 1.6rem !important; /* forced mobile size */
   }
 }
