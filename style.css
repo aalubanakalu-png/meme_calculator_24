@@ -1,128 +1,168 @@
+:root {
+  --bg: #f9f9f9;
+  --text: #111;
+  --btn-bg: #e0e0e0;
+  --btn-text: #000;
+  --op-bg: #ff9500;
+  --op-text: #fff;
+  --func-bg: #a5a5a5;
+  --accent: #2dd4bf;
+}
+
+body.dark {
+  --bg: #000;
+  --text: #fff;
+  --btn-bg: #333;
+  --btn-text: #fff;
+  --op-bg: #ff9500;
+  --op-text: #fff;
+  --func-bg: #555;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  background: #f0f0f0;
   margin: 0;
-  padding: 0;
+  font-family: sans-serif;
+  background: var(--bg);
+  color: var(--text);
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  transition: background 0.3s;
 }
 
-body.dark {
-  background: #222;
-  color: #fff;
-}
-
-.calculator {
-  width: 300px;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  overflow: hidden;
-}
-
-body.dark .calculator {
-  background: #333;
-}
-
-.top-bar {
+.calc-container {
+  width: 320px;
+  max-width: 100%;
   display: flex;
-  justify-content: flex-end;
-  padding: 5px;
+  flex-direction: column;
+  gap: 8px;
+  position: relative; /* important for overlay video */
 }
 
-#themeToggle {
-  border: none;
-  background: none;
-  font-size: 18px;
-  cursor: pointer;
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .display {
-  height: 60px;
   background: #222;
-  color: #0f0;
-  font-size: 22px;
-  padding: 10px;
+  color: #fff;
+  font-size: 2rem;      /* base font size */
+  text-align: right;
+  padding: 20px;
+  border-radius: 8px;
+  min-height: 80px;      /* increased to fit bigger meme messages */
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  position: relative;
 }
 
-.progress-container {
-  height: 5px;
-  background: #ccc;
+.display div {
+  white-space: nowrap;
+  display: inline-block; /* normal input numbers stay inline */
+  will-change: transform;
 }
 
-.progress {
-  width: 100%;
-  height: 5px;
-  display: none;
+/* Meme messages - now truly bigger */
+.display .msg {
+  display: block;          /* allows it to expand width */
+  font-size: 2rem !important; /* forced font size */
+  line-height: 1.2;        /* prevents clipping */
+  text-align: left;
+  font-weight: bold;
+  color: #ff4444;           /* optional color for meme effect */
 }
 
-.bar {
-  height: 5px;
-  width: 0%;
-  background: #0f0;
-  transition: width 0.2s linear;
+.scroll {
+  animation: scroll-text 8s linear infinite;
+}
+
+@keyframes scroll-text {
+  from { transform: translateX(100%); }
+  to { transform: translateX(-100%); }
 }
 
 .buttons {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
 }
 
-.buttons button {
-  padding: 20px;
-  font-size: 18px;
-  border: 1px solid #ccc;
-  background: #eee;
+button {
+  font-size: 1.6rem;
+  padding: 18px;
+  border: none;
+  border-radius: 8px;
+  background: var(--btn-bg);
+  color: var(--btn-text);
   cursor: pointer;
-  outline: none;
 }
 
-.buttons button:active {
-  background: #ddd;
+button.op {
+  background: var(--op-bg);
+  color: var(--op-text);
 }
 
-body.dark .buttons button {
-  background: #444;
-  color: #fff;
-  border-color: #555;
+button.func {
+  background: var(--func-bg);
+  color: var(--text);
 }
 
-.video-overlay {
+button.eq {
+  background: var(--op-bg);
+  grid-column: span 1;
+}
+
+button.zero {
+  grid-column: span 2;
+}
+
+.progress {
+  height: 6px;
+  background: #ccc;
+  border-radius: 4px;
+  overflow: hidden;
   display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
+}
+
+.bar {
   height: 100%;
-  background: rgba(0,0,0,0.6);
+  width: 0%;
+  background: var(--accent);
+  transition: width 0.3s linear;
+}
+
+/* Overlay video fits calculator */
+#videoOverlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  display: none;
   justify-content: center;
   align-items: center;
-  z-index: 999;
+  z-index: 100;
+  pointer-events: auto; /* blocks input while visible */
 }
 
-.overlay-video {
+#videoOverlay video {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  opacity: 0.5;
 }
 
-.msg {
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-.scroll {
-  animation: scrollText 8s linear infinite;
-}
-
-@keyframes scrollText {
-  from { transform: translateX(100%); }
-  to { transform: translateX(-100%); }
+/* Mobile tweaks */
+@media (max-width: 400px) {
+  .calc-container {
+    width: 95%;
+  }
+  .display {
+    font-size: 1.6rem;
+    padding: 15px;
+    min-height: 70px;    /* ensure space for bigger messages */
+  }
+  .display .msg {
+    font-size: 1.6rem !important; /* forced mobile size */
+    line-height: 1.2;
+  }
 }
