@@ -64,7 +64,7 @@ header {
 }
 
 .display .msg {
-  font-size: 0.8rem;
+  font-size: 2rem;
   text-align: left;
 }
 
@@ -159,3 +159,4 @@ button.zero {
     font-size: 0.7rem;
   }
 }
+
