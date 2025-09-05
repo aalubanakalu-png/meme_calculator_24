@@ -63,9 +63,11 @@ header {
   will-change: transform;
 }
 
+/* Calculator display messages (meme/funny messages) */
 .display .msg {
-  font-size: 1.2rem;
+  font-size: 1.2rem !important; /* updated size */
   text-align: left;
+  color: #fff !important;       /* white color */
 }
 
 .scroll {
@@ -152,15 +154,11 @@ button.zero {
     width: 95%;
   }
   .display {
-    font-size: 2rem;   /* keep same as desktop */
+    font-size: 1.6rem;
     padding: 15px;
-    color: #fff;       /* force white text */
   }
   .display .msg {
-    font-size: 1.5rem;
-    color: #fff;       /* force white text */
+    font-size: 1.2rem !important; /* same size on mobile */
+    color: #fff !important;
   }
 }
-
-
-
