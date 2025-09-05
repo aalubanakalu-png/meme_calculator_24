@@ -63,9 +63,11 @@ header {
   will-change: transform;
 }
 
+/* Funny/meme messages */
 .display .msg {
-  font-size: 0.8rem;
+  font-size: 0.7rem !important; /* small size */
   text-align: left;
+  color: #fff !important;       /* white color */
 }
 
 .scroll {
@@ -156,6 +158,8 @@ button.zero {
     padding: 15px;
   }
   .display .msg {
-    font-size: 0.7rem;
+    font-size: 0.7rem !important; /* ensures small size on mobile */
+    color: #fff !important;       /* ensures white color */
+    text-align: left;
   }
 }
