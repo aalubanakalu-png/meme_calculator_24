@@ -72,20 +72,16 @@ function makeWrong(correct) {
 
   if (!isFinite(correct) || isNaN(correct)) {
     let weird = longDecimal();
-
     if (Math.random() < 0.3) weird = "-" + weird;
     if (Math.random() < 0.25) weird = "√" + weird;
     if (Math.random() < 0.2) weird = weird + "i";
     if (Math.random() < 0.25) weird = weird + "e" + (Math.floor(Math.random() * 6) - 3);
-
     return capLength(weird);
   }
 
   let wrong = correct + (Math.random() < 0.5 ? 1 : -1) * (Math.floor(Math.random() * 999) + 1);
-
   if (Math.random() < 0.4) wrong *= (Math.random() * 5 + 2);
   if (Math.random() < 0.2) wrong = wrong / (Math.random() * 5 + 1);
-
   if (Math.random() < 0.3) wrong = "√" + Math.abs(wrong).toFixed(2);
   else if (Math.random() < 0.25) wrong = wrong.toExponential(2);
   else if (Math.random() < 0.3) wrong = wrong.toFixed(6);
@@ -170,8 +166,15 @@ function startProcess(expr) {
   }, stepMs);
 }
 
+// --- Mobile-safe input handling ---
 function addInputHandler(btn) {
-  function handler() {
+  let tapped = false;
+
+  function handler(e) {
+    if (tapped) return;
+    tapped = true;
+    setTimeout(() => tapped = false, 300);
+
     if (videoOverlay.style.display === "flex") return;
     startHappyMusicOnce();
 
@@ -187,7 +190,6 @@ function addInputHandler(btn) {
       setDisplayText(current);
 
     } else if (action === ".") {
-      // only after a number and only if no decimal yet in current segment
       if (current.length > 0 && /\d$/.test(current)) {
         let parts = current.split(/[\+\-\*\/%]/);
         let lastPart = parts[parts.length - 1];
@@ -214,17 +216,15 @@ function addInputHandler(btn) {
       setDisplayText(current || "0");
 
     } else if (action === "=") {
-      let lastChar = current.slice(-1);
       let hasOperator = /[+\-*/%]/.test(current);
       let valid = hasOperator && /\d$/.test(current);
-
       if (!current || !valid) return;
       startProcess(current);
     }
   }
 
   btn.addEventListener("click", handler);
-  btn.addEventListener("touchstart", handler);
+  // Removed touchstart to avoid double firing on mobile
 }
 
 document.querySelectorAll(".buttons button").forEach(addInputHandler);
