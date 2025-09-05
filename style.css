@@ -64,7 +64,7 @@ header {
 }
 
 .display .msg {
-  font-size: 1rem;
+  font-size: 1.2rem;
   text-align: left;
 }
 
@@ -157,8 +157,9 @@ button.zero {
     color: #fff;       /* force white text */
   }
   .display .msg {
-    font-size: 1rem;
+    font-size: 1.2rem;
     color: #fff;       /* force white text */
   }
 }
+
 
