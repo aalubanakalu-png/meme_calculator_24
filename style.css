@@ -48,27 +48,29 @@ header {
 .display {
   background: #222;
   color: #fff;
-  font-size: 2rem;
+  font-size: 2rem;      /* base font size */
   text-align: right;
   padding: 20px;
   border-radius: 8px;
-  min-height: 60px;
+  min-height: 80px;      /* increased to fit bigger meme messages */
   overflow: hidden;
   position: relative;
 }
 
 .display div {
   white-space: nowrap;
-  display: inline-block;
+  display: inline-block; /* normal input numbers stay inline */
   will-change: transform;
 }
 
-/* Meme messages - forced big size */
+/* Meme messages - now truly bigger */
 .display .msg {
-  font-size: 2rem !important; /* forced desktop size */
+  display: block;          /* allows it to expand width */
+  font-size: 2rem !important; /* forced font size */
+  line-height: 1.2;        /* prevents clipping */
   text-align: left;
   font-weight: bold;
-  color: #ff4444; /* optional for emphasis */
+  color: #ff4444;           /* optional color for meme effect */
 }
 
 .scroll {
@@ -157,8 +159,10 @@ button.zero {
   .display {
     font-size: 1.6rem;
     padding: 15px;
+    min-height: 70px;    /* ensure space for bigger messages */
   }
   .display .msg {
     font-size: 1.6rem !important; /* forced mobile size */
+    line-height: 1.2;
   }
 }
