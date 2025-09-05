@@ -65,7 +65,7 @@ header {
 
 /* Funny/meme messages */
 .display .msg {
-  font-size: 12px !important; /* smaller than numbers */
+  font-size: 16px !important; /* updated size */
   text-align: left;
   color: #fff !important;     /* white color */
 }
@@ -158,7 +158,7 @@ button.zero {
     padding: 15px;
   }
   .display .msg {
-    font-size: 12px !important; /* messages remain small */
+    font-size: 16px !important; /* messages remain 16px on mobile */
     color: #fff !important;
   }
 }
