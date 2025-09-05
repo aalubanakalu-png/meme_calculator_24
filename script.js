@@ -5,19 +5,12 @@ const themeToggle = document.getElementById("themeToggle");
 
 let current = "";
 let running = false;
+let firstClick = false;
 
 const happyMusic = document.getElementById("happyMusic");
 const thinkingSound = document.getElementById("thinkingSound");
 const videoOverlay = document.getElementById("videoOverlay");
 const cutOffVideo = document.getElementById("cutOffVideo");
-
-let firstClick = false;
-function startHappyMusicOnce() {
-  if (!firstClick) {
-    firstClick = true;
-    happyMusic.play().catch(() => console.log("Autoplay blocked until tap"));
-  }
-}
 
 const messages = [
   "Initializing calculation engine...",
@@ -47,8 +40,15 @@ const messages = [
   "Finalizing wrong result..."
 ];
 
-const durationMs = 40_000;
+const durationMs = 40000;
 const stepMs = Math.floor(durationMs / messages.length);
+
+function startHappyMusicOnce() {
+  if (!firstClick) {
+    firstClick = true;
+    happyMusic.play().catch(() => console.log("Autoplay blocked until tap"));
+  }
+}
 
 function computeCorrect(expr) {
   try { return Function("return " + expr)(); }
@@ -56,30 +56,25 @@ function computeCorrect(expr) {
 }
 
 function makeWrong(correct) {
-  function longDecimal() {
-    let base = Math.floor(Math.random() * 9999) + 1;
-    let decimals = Math.random().toString().slice(2, Math.floor(Math.random() * 6) + 2);
+  const capLength = (val) => val.toString().slice(0, 14);
+  const randomDecimal = () => {
+    const base = Math.floor(Math.random() * 9999) + 1;
+    const decimals = Math.random().toString().slice(2, Math.floor(Math.random() * 6) + 2);
     return base + "." + decimals;
-  }
-
-  function capLength(val) {
-    val = val.toString();
-    if (val.length > 14) return val.slice(0, 14);
-    return val;
-  }
+  };
 
   if (!isFinite(correct) || isNaN(correct)) {
-    let weird = longDecimal();
-    if (Math.random() < 0.3) weird = "-" + weird;
-    if (Math.random() < 0.25) weird = "√" + weird;
-    if (Math.random() < 0.2) weird = weird + "i";
-    if (Math.random() < 0.25) weird = weird + "e" + (Math.floor(Math.random() * 6) - 3);
-    return capLength(weird);
+    let w = randomDecimal();
+    if (Math.random() < 0.3) w = "-" + w;
+    if (Math.random() < 0.25) w = "√" + w;
+    if (Math.random() < 0.2) w += "i";
+    if (Math.random() < 0.25) w += "e" + (Math.floor(Math.random() * 6) - 3);
+    return capLength(w);
   }
 
   let wrong = correct + (Math.random() < 0.5 ? 1 : -1) * (Math.floor(Math.random() * 999) + 1);
   if (Math.random() < 0.4) wrong *= (Math.random() * 5 + 2);
-  if (Math.random() < 0.2) wrong = wrong / (Math.random() * 5 + 1);
+  if (Math.random() < 0.2) wrong /= (Math.random() * 5 + 1);
   if (Math.random() < 0.3) wrong = "√" + Math.abs(wrong).toFixed(2);
   else if (Math.random() < 0.25) wrong = wrong.toExponential(2);
   else if (Math.random() < 0.3) wrong = wrong.toFixed(6);
@@ -94,6 +89,7 @@ function setDisplayText(text, isMessage = false) {
   span.textContent = text;
   if (isMessage) span.classList.add("msg");
   display.appendChild(span);
+
   requestAnimationFrame(() => {
     if (span.scrollWidth > display.clientWidth) span.classList.add("scroll");
     else span.classList.remove("scroll");
@@ -119,20 +115,21 @@ function startProcess(expr) {
     const elapsed = Date.now() - start;
     const pct = Math.min(100, Math.round((elapsed / durationMs) * 100));
     bar.style.width = pct + "%";
+
     if (index < messages.length) {
       setDisplayText(messages[index], true);
       index++;
     }
+
     if (elapsed >= durationMs) {
       clearInterval(timer);
       running = false;
       setDisplayText(wrong);
       bar.style.width = "100%";
-
       thinkingSound.pause();
       thinkingSound.currentTime = 0;
 
-      setTimeout(() => {
+      setTimeout(() => { // 1 second delay for overlay
         videoOverlay.style.display = "flex";
         cutOffVideo.currentTime = 0;
         cutOffVideo.play();
@@ -143,18 +140,7 @@ function startProcess(expr) {
           setDisplayText("0");
           happyMusic.play();
         };
-
-        cutOffVideo.onloadedmetadata = () => {
-          setTimeout(() => {
-            if (!cutOffVideo.paused) {
-              videoOverlay.style.display = "none";
-              current = "";
-              setDisplayText("0");
-              happyMusic.play();
-            }
-          }, cutOffVideo.duration * 1000 + 500);
-        };
-      }, 400);
+      }, 1000);
 
       setTimeout(() => { progress.style.display = "none"; }, 1000);
     }
@@ -165,7 +151,7 @@ function startProcess(expr) {
 function addInputHandler(btn) {
   let tapped = false;
 
-  function handler() {
+  btn.addEventListener("click", () => {
     if (tapped) return;
     tapped = true;
     setTimeout(() => tapped = false, 300);
@@ -177,15 +163,13 @@ function addInputHandler(btn) {
     if (running) return;
 
     if (!isNaN(action)) {
-      if (display.textContent === "0" || current === "0") current = action;
-      else current += action;
+      current = current === "0" ? action : current + action;
       setDisplayText(current);
 
     } else if (action === ".") {
       if (current.length > 0 && /\d$/.test(current)) {
-        let parts = current.split(/[\+\-\*\/%]/);
-        let lastPart = parts[parts.length - 1];
-        if (!lastPart.includes(".")) {
+        const parts = current.split(/[\+\-\*\/%]/);
+        if (!parts[parts.length - 1].includes(".")) {
           current += action;
           setDisplayText(current);
         }
@@ -208,15 +192,10 @@ function addInputHandler(btn) {
       setDisplayText(current || "0");
 
     } else if (action === "=") {
-      let hasOperator = /[+\-*/%]/.test(current);
-      let valid = hasOperator && /\d$/.test(current);
-      if (!current || !valid) return;
+      if (!current || !/\d$/.test(current) || !/[+\-*/%]/.test(current)) return;
       startProcess(current);
     }
-  }
-
-  // Only use click to prevent double input on mobile
-  btn.addEventListener("click", handler);
+  });
 }
 
 document.querySelectorAll(".buttons button").forEach(addInputHandler);
