@@ -36,7 +36,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  position: relative;
+  position: relative; /* important for overlay video */
 }
 
 header {
@@ -48,11 +48,11 @@ header {
 .display {
   background: #222;
   color: #fff;
-  font-size: 2rem;      
+  font-size: 2rem;
   text-align: right;
   padding: 20px;
   border-radius: 8px;
-  min-height: 70px;
+  min-height: 60px;
   overflow: hidden;
   position: relative;
 }
@@ -65,11 +65,10 @@ header {
 
 /* Meme messages */
 .display .msg {
-  display: block;
-  font-size: 0.7rem !important;  /* smaller size */
-  line-height: 1.2;
-  font-weight: bold;
-  color: #fff !important;        /* forces white */
+  font-size: 2rem; /* Increased from 2.0rem to 2rem */
+  text-align: left;
+  font-weight: bold; /* optional for emphasis */
+  color: #ff4444;    /* optional color for meme effect */
 }
 
 .scroll {
@@ -131,7 +130,7 @@ button.zero {
   transition: width 0.3s linear;
 }
 
-/* Overlay video */
+/* Overlay video fits calculator */
 #videoOverlay {
   position: absolute;
   top: 0; left: 0;
@@ -140,7 +139,7 @@ button.zero {
   justify-content: center;
   align-items: center;
   z-index: 100;
-  pointer-events: auto;
+  pointer-events: auto; /* blocks input while visible */
 }
 
 #videoOverlay video {
@@ -156,13 +155,10 @@ button.zero {
     width: 95%;
   }
   .display {
-    font-size: 1.6rem;  
-    min-height: 60px;
+    font-size: 1.6rem;
     padding: 15px;
   }
   .display .msg {
-    font-size: 0.7rem !important;  /* same as desktop */
-    line-height: 1.2;
-    color: #fff !important;        /* same as desktop */
+    font-size: 1.4rem; /* readable on small screens */
   }
 }
